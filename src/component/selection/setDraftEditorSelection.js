@@ -120,12 +120,14 @@ function setDraftEditorSelection(
   // It's possible that the editor has been removed from the DOM but
   // our selection code doesn't know it yet. Forcing selection in
   // this case may lead to errors, so just bail now.
-  const documentObject = getCorrectDocumentFromNode(node);
-  if (!containsNode(documentObject.documentElement, node)) {
+  // const documentObject = getCorrectDocumentFromNode(node);
+  const contains = containsNode(node.getRootNode(), node);
+
+  if (!contains) {
     return;
   }
 
-  const selection: SelectionObject = documentObject.defaultView.getSelection();
+  const selection: SelectionObject = (node.getRootNode(): Document).getSelection();
   let anchorKey = selectionState.getAnchorKey();
   let anchorOffset = selectionState.getAnchorOffset();
   let focusKey = selectionState.getFocusKey();
@@ -273,7 +275,7 @@ function addFocusToSelection(
       }
     } catch (e) {
       DraftJsDebugLogging.logSelectionStateFailure({
-        anonymizedDom: getAnonymizedEditorDOM(node, function (n) {
+        anonymizedDom: getAnonymizedEditorDOM(node, function(n) {
           const labels = [];
           if (n === activeElement) {
             labels.push('active element');

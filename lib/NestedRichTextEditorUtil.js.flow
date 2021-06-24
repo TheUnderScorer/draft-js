@@ -267,7 +267,7 @@ const NestedRichTextEditorUtil: RichTextUtils = {
     }
 
     content = editorState.getCurrentContent().merge({
-      blockMap: blockMap
+      blockMap
     });
     const withAdjustment = adjustBlockDepthForContentState(content, selection, event.shiftKey ? -1 : 1);
     return EditorState.push(editorState, withAdjustment, 'adjust-depth');

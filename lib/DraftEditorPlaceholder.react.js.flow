@@ -20,6 +20,7 @@ const React = require("react");
 const shallowEqual = require("fbjs/lib/shallowEqual");
 
 type Props = {
+  ariaHidden?: boolean,
   accessibilityID: string,
   className?: string,
   editorState: EditorState,
@@ -52,7 +53,7 @@ class DraftEditorPlaceholder extends React.Component<Props> {
     // cx to concatenate is rising issues with haste internally.
     // eslint-disable-next-line fb-www/cx-concat
     cx('public/DraftEditorPlaceholder/inner') + (this.props.className != null ? ` ${this.props.className}` : '');
-    return <div className={cx({
+    return <div aria-hidden={this.props.ariaHidden} className={cx({
       'public/DraftEditorPlaceholder/root': true,
       'public/DraftEditorPlaceholder/hasFocus': this.props.editorState.getSelection().getHasFocus()
     })}>

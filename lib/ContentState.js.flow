@@ -252,7 +252,8 @@ class ContentState extends ContentStateRecord {
 
   static fromJS(state: ContentStateRawType): ContentState {
     return new ContentState({ ...state,
-      blockMap: OrderedMap(state.blockMap).map(ContentState.createContentBlockFromJS),
+      blockMap: OrderedMap(state.blockMap).map( // $FlowFixMe[method-unbinding]
+      ContentState.createContentBlockFromJS),
       selectionBefore: new SelectionState(state.selectionBefore),
       selectionAfter: new SelectionState(state.selectionAfter)
     });

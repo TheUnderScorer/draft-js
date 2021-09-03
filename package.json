@@ -78,6 +78,7 @@
     "gulp-rename": "^2.0.0",
     "gulp-util": "^3.0.8",
     "jest": "^26.4.2",
+    "query-string": "7.0.1",
     "prettier": "1.19.1",
     "react": "^17.0.2",
     "react-dom": "^16.8.0",

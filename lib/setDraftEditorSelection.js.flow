@@ -93,6 +93,16 @@ function getAnonymizedEditorDOM(node: Node, getNodeLabels?: (n: Node) => Array<s
 function getNodeLength(node: Node): number {
   return node.nodeValue === null ? node.childNodes.length : node.nodeValue.length;
 }
+
+function getSelection(node: Node): Selection {
+  const rootNode = node.getRootNode();
+
+  if (rootNode.getSelection) {
+    return rootNode.getSelection();
+  }
+
+  return document.getSelection();
+}
 /**
  * In modern non-IE browsers, we can support both forward and backward
  * selections.
@@ -115,7 +125,7 @@ function setDraftEditorSelection(selectionState: SelectionState, node: Node, blo
     return;
   }
 
-  const selection: SelectionObject = (node.getRootNode(): Document).getSelection();
+  const selection: SelectionObject = getSelection();
   let anchorKey = selectionState.getAnchorKey();
   let anchorOffset = selectionState.getAnchorOffset();
   let focusKey = selectionState.getFocusKey();

@@ -93,7 +93,7 @@ const shouldNotAddWrapperElement = (block: BlockNodeRecord, contentState: Conten
   return nextSiblingKey ? contentState.getBlockForKey(nextSiblingKey).getType() === block.getType() : false;
 };
 
-const applyWrapperElementToSiblings = (wrapperTemplate: *, Element: string, nodes: Array<React.Node>): Array<React.Node> => {
+const applyWrapperElementToSiblings = (wrapperTemplate: any, Element: string, nodes: Array<React.Node>): Array<React.Node> => {
   const wrappedSiblings = []; // we check back until we find a sibling that does not have same wrapper
 
   for (const sibling: any of nodes.reverse()) {
@@ -144,9 +144,9 @@ const getCustomRenderConfig = (block: BlockNodeRecord, blockRendererFn: BlockRen
   };
 };
 
-const getElementPropsConfig = (block: BlockNodeRecord, editorKey: string, offsetKey: string, blockStyleFn: BlockStyleFn, customConfig: *, ref: null | {|
+const getElementPropsConfig = (block: BlockNodeRecord, editorKey: string, offsetKey: string, blockStyleFn: BlockStyleFn, customConfig: CustomRenderConfig, ref: null | {
   current: null | Element
-|}): Object => {
+}): Object => {
   let elementProps: Object = {
     'data-block': true,
     'data-editor': editorKey,
@@ -171,9 +171,9 @@ const getElementPropsConfig = (block: BlockNodeRecord, editorKey: string, offset
 };
 
 class DraftEditorBlockNode extends React.Component<Props> {
-  wrapperRef: {|
+  wrapperRef: {
     current: null | Element
-  |} = React.createRef<Element>();
+  } = React.createRef<Element>();
 
   shouldComponentUpdate(nextProps: Props): boolean {
     const {

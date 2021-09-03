@@ -14,6 +14,9 @@ declare var __DEV__: boolean;
 import type { BlockMap } from "./BlockMap";
 import type { BlockNodeConfig } from "./BlockNode";
 import type CharacterMetadata from "./CharacterMetadata";
+import type { DraftBlockType } from "./DraftBlockType";
+import type { EntityRange } from "./EntityRange";
+import type { InlineStyleRange } from "./InlineStyleRange";
 import type { RawDraftContentBlock } from "./RawDraftContentBlock";
 import type { RawDraftContentState } from "./RawDraftContentState";
 
@@ -98,7 +101,29 @@ const addKeyIfMissing = (block: RawDraftContentBlock): RawDraftContentBlock => {
  */
 
 
-const updateNodeStack = (stack: Array<*>, nodes: Array<*>, parentRef: ContentBlockNode): Array<*> => {
+const updateNodeStack = (stack: Array<any | {
+  children?: Array<RawDraftContentBlock>,
+  data?: any,
+  depth: ?number,
+  entityRanges: ?Array<EntityRange>,
+  inlineStyleRanges: ?Array<InlineStyleRange>,
+  key: ?string,
+  parentRef: ContentBlockNode,
+  text: string,
+  type: DraftBlockType,
+  ...
+}>, nodes: Array<any>, parentRef: ContentBlockNode): Array<any | {
+  children?: Array<RawDraftContentBlock>,
+  data?: any,
+  depth: ?number,
+  entityRanges: ?Array<EntityRange>,
+  inlineStyleRanges: ?Array<InlineStyleRange>,
+  key: ?string,
+  parentRef: ContentBlockNode,
+  text: string,
+  type: DraftBlockType,
+  ...
+}> => {
   const nodesWithParentRef = nodes.map(block => {
     return { ...block,
       parentRef
@@ -115,7 +140,7 @@ const updateNodeStack = (stack: Array<*>, nodes: Array<*>, parentRef: ContentBlo
  */
 
 
-const decodeContentBlockNodes = (blocks: Array<RawDraftContentBlock>, entityMap: *): BlockMap => {
+const decodeContentBlockNodes = (blocks: Array<RawDraftContentBlock>, entityMap: EntityKeyMap): BlockMap => {
   return blocks // ensure children have valid keys to enable sibling links
   .map(addKeyIfMissing).reduce((blockMap: BlockMap, block: RawDraftContentBlock, index: number) => {
     invariant(Array.isArray(block.children), 'invalid RawDraftContentBlock can not be converted to ContentBlockNode'); // ensure children have valid keys to enable sibling links

@@ -101,6 +101,16 @@ function getNodeLength(node: Node): number {
     : node.nodeValue.length;
 }
 
+function getSelection(node: Node): Selection {
+  const rootNode = node.getRootNode();
+
+  if (rootNode.getSelection) {
+    return rootNode.getSelection();
+  }
+
+  return document.getSelection();
+}
+
 /**
  * In modern non-IE browsers, we can support both forward and backward
  * selections.
@@ -127,7 +137,7 @@ function setDraftEditorSelection(
     return;
   }
 
-  const selection: SelectionObject = (node.getRootNode(): Document).getSelection();
+  const selection: SelectionObject = getSelection();
   let anchorKey = selectionState.getAnchorKey();
   let anchorOffset = selectionState.getAnchorOffset();
   let focusKey = selectionState.getFocusKey();

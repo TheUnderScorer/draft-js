@@ -14,6 +14,7 @@ import type { BlockNodeRecord } from "./BlockNodeRecord";
 import type ContentState from "./ContentState";
 import type { RawDraftContentBlock } from "./RawDraftContentBlock";
 import type { RawDraftContentState } from "./RawDraftContentState";
+import type { RawDraftEntity } from "./RawDraftEntity";
 
 const ContentBlock = require("./ContentBlock");
 
@@ -27,7 +28,9 @@ const encodeInlineStyleRanges = require("./encodeInlineStyleRanges");
 
 const invariant = require("fbjs/lib/invariant");
 
-const createRawBlock = (block: BlockNodeRecord, entityStorageMap: *) => {
+const createRawBlock = (block: BlockNodeRecord, entityStorageMap: {
+  [key: string]: RawDraftEntity
+}) => {
   return {
     key: block.getKey(),
     text: block.getText(),
@@ -39,7 +42,9 @@ const createRawBlock = (block: BlockNodeRecord, entityStorageMap: *) => {
   };
 };
 
-const insertRawBlock = (block: BlockNodeRecord, entityMap: *, rawBlocks: Array<RawDraftContentBlock>, blockCacheRef: *) => {
+const insertRawBlock = (block: BlockNodeRecord, entityMap: {
+  [key: string]: RawDraftEntity
+}, rawBlocks: Array<RawDraftContentBlock>, blockCacheRef: {...}) => {
   if (block instanceof ContentBlock) {
     rawBlocks.push(createRawBlock(block, entityMap));
     return;

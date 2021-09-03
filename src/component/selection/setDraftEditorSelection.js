@@ -137,7 +137,7 @@ function setDraftEditorSelection(
     return;
   }
 
-  const selection: SelectionObject = getSelection();
+  const selection: SelectionObject = getSelection(node);
   let anchorKey = selectionState.getAnchorKey();
   let anchorOffset = selectionState.getAnchorOffset();
   let focusKey = selectionState.getFocusKey();
